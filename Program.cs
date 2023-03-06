@@ -18,16 +18,17 @@ namespace LLABA3 {
         static void Main(string[] args) {
             var Random = new Random();
             var FirstMatrix = new ImMatrix(5);
-            for (int RowIndex = 0; RowIndex < 5; ++RowIndex) {
-                for (int ColumnIndex = 0; ColumnIndex < 5; ++ColumnIndex) {
+            int NumberOfMatrix = 5;
+            for (int RowIndex = 0; RowIndex < NumberOfMatrix; ++RowIndex) {
+                for (int ColumnIndex = 0; ColumnIndex < NumberOfMatrix; ++ColumnIndex) {
                     FirstMatrix[RowIndex, ColumnIndex] = Random.Next(100);
                 }
             }
             Console.WriteLine($"первая матрица: \n{FirstMatrix}");
 
-            var SecondMatrix = new ImMatrix(5);
-            for (int RowIndex = 0; RowIndex < 5; ++RowIndex) {
-                for (int ColumnIndex = 0; ColumnIndex < 5; ++ColumnIndex) {
+            var SecondMatrix = new ImMatrix(NumberOfMatrix);
+            for (int RowIndex = 0; RowIndex < NumberOfMatrix; ++RowIndex) {
+                for (int ColumnIndex = 0; ColumnIndex < NumberOfMatrix; ++ColumnIndex) {
                     SecondMatrix[RowIndex, ColumnIndex] = Random.Next(100);
                 }
             }
@@ -80,7 +81,7 @@ public class ImMatrix {
         set { Matrix[RowIndex, ColumnIndex] = value; }
     }
 
-    public static ImMatrix operator +(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static ImMatrix operator + (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         if (FirstMatrix.Dimension != SecondMatrix.Dimension)
             throw new ArgumentException("матрицы не одинакового размера!");
         var Result = new ImMatrix(FirstMatrix.Dimension);
@@ -93,7 +94,7 @@ public class ImMatrix {
         return Result;
     }
 
-    public static ImMatrix operator -(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static ImMatrix operator - (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         var Result = new ImMatrix(FirstMatrix.Dimension);
         for (int RowIndex = 0; RowIndex < Result.Dimension; ++RowIndex) {
             for (int ColumnIndex = 0; ColumnIndex < Result.Dimension; ++ColumnIndex) {
@@ -102,7 +103,7 @@ public class ImMatrix {
         }
         return Result;
     }
-    public static ImMatrix operator *(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static ImMatrix operator * (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         var Result = new ImMatrix(FirstMatrix.Dimension);
         for (int RowIndex = 0; RowIndex < Result.Dimension; ++RowIndex) {
             for (int ColumnIndex = 0; ColumnIndex < Result.Dimension; ++ColumnIndex) {
@@ -116,63 +117,43 @@ public class ImMatrix {
         return Result;
     }
 
-    public static bool operator >(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static bool operator > (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         for (int RowIndex = 0; RowIndex < FirstMatrix.Dimension; ++RowIndex) {
             for (int ColumnIndex = 0; ColumnIndex < FirstMatrix.Dimension; ++ColumnIndex) {
-                if (FirstMatrix[RowIndex, ColumnIndex] <= SecondMatrix[RowIndex, ColumnIndex]) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
+                return FirstMatrix[RowIndex, ColumnIndex] <= SecondMatrix[RowIndex, ColumnIndex];
             }
         }
         return true;
     }
 
-    public static bool operator <(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static bool operator < (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         for (int RowIndex = 0; RowIndex < FirstMatrix.Dimension; ++RowIndex) {
             for (int ColumnIndex = 0; ColumnIndex < FirstMatrix.Dimension; ++ColumnIndex) {
-                if (FirstMatrix[RowIndex, ColumnIndex] >= SecondMatrix[RowIndex, ColumnIndex]) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
+                return FirstMatrix[RowIndex, ColumnIndex] >= SecondMatrix[RowIndex, ColumnIndex];
             }
         }
         return true;
     }
 
-    public static bool operator >=(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static bool operator >= (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         for (int RowIndex = 0; RowIndex < FirstMatrix.Dimension; ++RowIndex) {
             for (int RowCounter = 0; RowCounter < FirstMatrix.Dimension; ++RowCounter) {
-                if (FirstMatrix[RowIndex, RowCounter] < SecondMatrix[RowIndex, RowCounter]) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
+                return FirstMatrix[RowIndex, RowCounter] < SecondMatrix[RowIndex, RowCounter]; 
             }
         }
         return true;
     }
 
-    public static bool operator <=(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static bool operator <= (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         for (int RowIndex = 0; RowIndex < FirstMatrix.Dimension; ++RowIndex) {
             for (int ColumnIndex = 0; ColumnIndex < FirstMatrix.Dimension; ++ColumnIndex) {
-                if (FirstMatrix[RowIndex, ColumnIndex] > SecondMatrix[RowIndex, ColumnIndex]) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
+                return FirstMatrix[RowIndex, ColumnIndex] > SecondMatrix[RowIndex, ColumnIndex];
             }
         }
         return true;
     }
 
-    public static bool operator ==(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+    public static bool operator == (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
         if (FirstMatrix is null) {
             return SecondMatrix is null;
         }
@@ -192,8 +173,8 @@ public class ImMatrix {
         return true;
     }
 
-    public static bool operator !=(ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
-        return !(FirstMatrix == SecondMatrix);
+    public static bool operator != (ImMatrix FirstMatrix, ImMatrix SecondMatrix) {
+        return ! (FirstMatrix == SecondMatrix);
     }
     public static explicit operator bool(ImMatrix Matrix) {
         return Matrix != null && Matrix.Dimension > 0;
@@ -280,7 +261,7 @@ public class ImMatrix {
     }
 
     public override bool Equals(object Obj) {
-        if (Obj is null || !(Obj is ImMatrix)) {
+        if (Obj is null || ! (Obj is ImMatrix)) {
             return false;
         }
 
